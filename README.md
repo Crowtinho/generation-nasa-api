@@ -15,3 +15,11 @@ En este laboratorio, usarás la API de la NASA para construir un explorador de A
     - Implementar un botón para guardar la APOD actual en favoritos.
     - Almacenar los favoritos en localStorage para que persistan al recargar la página.
     - Mostrar una lista de favoritos guardados, y al hacer clic en uno, cargar esa APOD automáticamente.
+
+## Integrantes: 
+- Majo Infante
+- Andres Cuervo
+- Andres Moreno
+- Valeria Serna
+- Diego Cadamil
+- Camila Rayo
