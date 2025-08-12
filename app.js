@@ -27,7 +27,7 @@ function buscarDato(){
 function addApod(){
     let apod = getApod();
     apod.push(datos);
-    saveApod(apod)
+    saveApod(apod);
 }
 
 
@@ -41,11 +41,27 @@ function getApod(){
 }
 
 
-function saveApod(){
-    localStorage.setItem("apod",JSON.stringify(datos))
-    
+function saveApod(apod){
+    localStorage.setItem("apod", JSON.stringify(apod));
 }
 
+function showApod(){
+    const apod = getApod();
+    const container = document.getElementById("apodContainer");
+    container.innerHTML = ""; // Limpiar el contenedor antes de mostrar los datos
+
+    apod.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+            <h2>${item.title}</h2>
+            <p>${item.description}</p>
+            <img src="${item.image}" alt="${item.title}">
+            <p>Date: ${item.date}</p>
+        `;
+        container.appendChild(card);
+    });
+}
 
 
 

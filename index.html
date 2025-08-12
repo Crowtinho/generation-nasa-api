@@ -17,8 +17,14 @@
             <p id="description"></p>
         </div>
         <button type="button" onclick="buscarDato()" class="btn btn-sm btn-primary">Agregar</button>
-        <button type="button" onclick="mostrarFecha()" class="btn btn-sm btn-primary">fecha</button>
+        <!-- <button type="button" onclick="mostrarFecha()" class="btn btn-sm btn-primary">fecha</button> -->
         <button type="button" onclick="addApod()" class="btn btn-sm btn-primary">agregar</button>
+        <button type="button" onclick="showApod()" class="btn btn-sm btn-primary">Mostrar</button>
+    </div>
+    <div id="apodContainer" class="container mx-5 mt-5">
+        <h2>APODs Guardados</h2>
+        <div id="apodList" class="row"></div>
+
     </div>
 </body>
 <script src="app.js"></script>
