@@ -1,14 +1,13 @@
 let datos;
 
 function getFecha() {
-    const date = document.getElementById("dateA").value;
-    return date;
+    return document.getElementById("dateA").value;
 }
 
 function buscarDato() {
     let date = getFecha();
-
     let hoy = new Date().toISOString().split("T")[0];
+
     if (date > hoy) {
         alert("No puedes seleccionar una fecha futura");
         return;
@@ -29,18 +28,21 @@ function buscarDato() {
         datos = {
             title: data.title,
             description: data.explanation,
-            image: data.media_type === "image" 
-                    ? `<img src="${data.url}" alt="${data.title}">` 
-                    : `<iframe src="${data.url}" frameborder="0" allowfullscreen></iframe>`,
+            image: data.media_type === "image"  
+                ? `<img src="${data.url}" alt="${data.title}" class="img-fluid">`  
+                : `<iframe src="${data.url}" frameborder="0" allowfullscreen></iframe>`,
             date: data.date
         };
 
         document.getElementById("currentApod").innerHTML = `
-            <h2>${datos.title}</h2>
-            <p>${datos.description}</p>
-            ${datos.image}
-            <p>Fecha: ${datos.date}</p>
-            <button onclick="addApod()">Agregar a Favoritos</button>
+            <div class="card simple-card">
+                <div class="card-body">
+                    <h5 class="card-title">${datos.title}</h5>
+                    ${datos.image}
+                    <p class="card-text mt-3">${datos.description}</p>
+                    <p class="text-muted">Fecha: ${datos.date}</p>
+                </div>
+            </div>
         `;
     })
     .catch(error => {
@@ -58,10 +60,7 @@ function addApod() {
 
 function getApod() {
     const item = localStorage.getItem("apod");
-    if (!item) {
-        return [];
-    }
-    return JSON.parse(item);
+    return item ? JSON.parse(item) : [];
 }
 
 function saveApod(apod) {
@@ -70,17 +69,21 @@ function saveApod(apod) {
 
 function showApod() {
     const apod = getApod();
-    const container = document.getElementById("apodContainer");
-    container.innerHTML = ""; // Limpiar antes de mostrar
+    const container = document.getElementById("apodList");
+    container.innerHTML = "";
 
     apod.forEach(item => {
         const card = document.createElement("div");
-        card.className = "card";
+        card.className = "col-md-4 mb-3";
         card.innerHTML = `
-            <h2>${item.title}</h2>
-            <p>${item.description}</p>
-            ${item.image}
-            <p>Fecha: ${item.date}</p>
+            <div class="card simple-card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">${item.title}</h5>
+                    ${item.image}
+                    <p class="card-text mt-3">${item.description}</p>
+                    <p class="text-muted">Fecha: ${item.date}</p>
+                </div>
+            </div>
         `;
         container.appendChild(card);
     });
