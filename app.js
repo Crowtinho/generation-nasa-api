@@ -15,29 +15,38 @@ function buscarDato() {
     }
 
     fetch(`https://api.nasa.gov/planetary/apod?api_key=VdkAcypNNGbR9GcaVta6x68abrfan8xYRIObJ6Nl&date=${date}`)
-        .then(response => response.json())
-        .then(data => {
-            datos = {
-                title: data.title,
-                description: data.explanation,
-                image: data.media_type === "image" 
-                        ? `<img src="${data.url}" alt="${data.title}">` 
-                        : `<iframe src="${data.url}" frameborder="0" allowfullscreen></iframe>`,
-                date: data.date
-            };
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Error HTTP: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.error) {
+            throw new Error(data.error.message);
+        }
 
-            document.getElementById("currentApod").innerHTML = `
-                <h2>${datos.title}</h2>
-                <p>${datos.description}</p>
-                ${datos.image}
-                <p>Fecha: ${datos.date}</p>
-                <button onclick="addApod()">Agregar a Favoritos</button>
-            `;
-        })
-        .catch(error => {
-            console.error('Error al consumir la API:', error);
-            alert("No se pudo consumir la API");
-        });
+        datos = {
+            title: data.title,
+            description: data.explanation,
+            image: data.media_type === "image" 
+                    ? `<img src="${data.url}" alt="${data.title}">` 
+                    : `<iframe src="${data.url}" frameborder="0" allowfullscreen></iframe>`,
+            date: data.date
+        };
+
+        document.getElementById("currentApod").innerHTML = `
+            <h2>${datos.title}</h2>
+            <p>${datos.description}</p>
+            ${datos.image}
+            <p>Fecha: ${datos.date}</p>
+            <button onclick="addApod()">Agregar a Favoritos</button>
+        `;
+    })
+    .catch(error => {
+        console.error('Error al consumir la API:', error);
+        alert("No se pudo consumir la API: " + error.message);
+    });
 }
 
 function addApod() {
@@ -76,5 +85,7 @@ function showApod() {
         container.appendChild(card);
     });
 }
+
+window.onload = showApod;
 
 window.onload = showApod;
