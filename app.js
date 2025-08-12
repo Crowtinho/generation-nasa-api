@@ -87,5 +87,3 @@ function showApod() {
 }
 
 window.onload = showApod;
-
-window.onload = showApod;
